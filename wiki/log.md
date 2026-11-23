@@ -1,0 +1,13 @@
+# Wiki operation log
+- 2026-11-23 14:26 | discuss | Pure picked the topic. Claude proposed 8 pages and 7 sources.
+- 2026-11-23 14:48 | discuss | Pure confirmed the audience (classmate, no background). Pure added stablecoins, price/exchanges, P2P and "why crypto", and gave 4 links.
+- 2026-11-23 ~15:00 | ingest | Fetched S1–S7. The Investopedia link Pure gave was blocked (SITE_BLOCKED), so it was not ingested. The direct curl fetch was blocked by the sandbox proxy, so a web-fetch tool was used instead.
+- 2026-11-23 ~15:00 | ingest-check | Flagged ⚠ in S6: "nearly $5 billion by 2030" is inconsistent with S3 (USDT ≈ $175B). S7 was labeled as opinion.
+- 2026-11-23 ~15:10 | generate | Wrote 9 concept pages + the index from raw/ notes.
+- 2026-11-23 ~15:20 | lint run 1 | Structural lint PASSED (0 problems). The lint script was first tested on a corrupted copy and caught 4 planted errors.
+- 2026-11-23 ~15:25 | grounding check run 1 | Claude compared each wiki claim with the raw notes and found 3 problems: an overclaim ("most people"), a term that isn't in the source ("slashed"), and a factual claim hidden inside an AI-written analogy (private keys). All 3 were fixed. Gap: no source covers wallets or private keys.
+- 2026-11-23 16:04 | discuss (run 2) | Pure asked for more sources. Claude pointed to the wallets/keys gap. Pure's Investopedia private-key link was blocked again, so Pure chose the CoinDesk alternative.
+- 2026-11-23 16:05 | ingest S8 + ingest check | Fetched OK. The grounding check was MOVED EARLIER into ingest: the S8 claim "public key encrypts transactions" conflicts with S1 (transactions are signed, not encrypted), so it was flagged ⚠ in raw/ before any wiki text was written.
+- 2026-11-23 16:10 | generate | New page wallets-and-keys. The bitcoin.md gap note was replaced with a link.
+- 2026-11-23 16:12 | grounding check run 2 | 1 problem: "Not your keys" was put in quotes as if from S8, but the phrase isn't clearly on the page. Rewrote it using S8 + S5 wording.
+- 2026-11-23 16:15 | slides | Added slide 5b "Wallets & keys" (deck is now 16 slides).

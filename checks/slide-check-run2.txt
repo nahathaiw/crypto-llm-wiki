@@ -1,0 +1,2 @@
+slides checked: 15
+RESULT: PASS

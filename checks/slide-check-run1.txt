@@ -1,0 +1,6 @@
+slides checked: 15
+FAIL | 2 | no source tags in footer | 
+FAIL | 7 | wiki page missing | p-network
+FAIL | 7 | footer cites source not on its wiki page | ['S1', 'S2', 'S5']
+FAIL | 14 | no source tags in footer | 
+RESULT: 4 problem(s)

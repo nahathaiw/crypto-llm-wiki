@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Crypto Basics Wiki</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: left page index (sticky on desktop), right column of wiki pages; source tags link to raw notes */
+:root{--bg:#EEF1F5;--card:#FFFFFF;--ink:#152233;--muted:#5A6878;--line:#D5DCE5;--accent:#2747A3;--hash:#A86A00;--soft:#E6ECF8;--warn:#9A3B1E;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0F1620;--card:#17212E;--ink:#E6ECF3;--muted:#9AA8B8;--line:#2A3746;--accent:#8FA8F5;--hash:#E3B04B;--soft:#1F2C40;--warn:#F0A07F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1620;--card:#17212E;--ink:#E6ECF3;--muted:#9AA8B8;--line:#2A3746;--accent:#8FA8F5;--hash:#E3B04B;--soft:#1F2C40;--warn:#F0A07F;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:240px 1fr;gap:28px}
+.wrap>*{min-width:0}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}}
+header{max-width:1100px;margin:0 auto 20px}
+header h1{font:700 clamp(26px,4vw,40px)/1.1 var(--display);margin:0 0 6px}
+header p{color:var(--muted);margin:0;max-width:70ch}
+nav{position:sticky;top:max(16px,env(safe-area-inset-top,0px));align-self:start;display:grid;gap:4px;font-size:14px}
+@media (max-width:760px){nav{position:static}}
+nav a{color:var(--ink);text-decoration:none;padding:4px 8px;border-radius:4px} nav a:hover{background:var(--soft)}
+main{display:grid;gap:18px}
+article{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 24px;scroll-margin-top:16px}
+article h1{font:700 24px/1.2 var(--display);margin:0 0 10px;text-wrap:balance} article h2{font:500 17px var(--display);margin:18px 0 6px;color:var(--accent)}
+.pid{font:12px var(--mono);color:var(--muted);margin:0 0 6px}
+a{color:var(--accent)} a.st{font:600 11px var(--mono);background:var(--soft);padding:1px 5px;border-radius:3px;text-decoration:none;color:var(--hash)}
+a.wl{font-family:var(--mono);font-size:13px}
+.op{color:var(--warn);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto} th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.meta{display:grid;gap:2px;font-size:13px;color:var(--muted);margin-bottom:8px} .meta b{color:var(--ink);font-family:var(--mono);font-weight:600;font-size:12px;margin-right:6px}
+#sources>h2{font:700 22px var(--display);margin:12px 0 0}
+</style>
+</head><body>
+<header><p style="margin:0 0 8px;font:13px var(--mono)"><a href="../">← Project home</a> · <a href="../slides/">Teaching slides</a></p><h1>Crypto Basics Wiki</h1><p>An LLM-maintained wiki about blockchain and cryptocurrency for beginners. It has 10 concept pages built from 8 ingested sources. Each claim carries a source tag like <a class="st" href="#src-S1">S1</a>, and you can click the tag to see the raw note it came from.</p></header>
+<div class="wrap"><nav><a href="#index">Crypto Basics Wiki — Index</a>
+<a href="#why-crypto">Why crypto? Trust, middlemen and double-spending</a>
+<a href="#blockchain-basics">Blockchain basics: blocks, hashes, the chain</a>
+<a href="#p2p-network">Peer-to-peer networks and nodes</a>
+<a href="#consensus">Consensus: Proof of Work vs Proof of Stake</a>
+<a href="#bitcoin">Bitcoin (and keys and signatures)</a>
+<a href="#wallets-and-keys">Wallets, public keys and private keys</a>
+<a href="#ethereum">Ethereum and smart contracts</a>
+<a href="#stablecoins">Stablecoins</a>
+<a href="#exchanges-and-price">Exchanges and how the price is set</a>
+<a href="#risks-and-future">Risks and the future</a>
+<a href="#log">Wiki operation log</a>
+<a href="#sources">Raw sources S1–S7</a></nav>
+<main><article id="index"><p class="pid">wiki/index.md</p><h1>Crypto Basics Wiki — Index</h1>
+<p>Topic: blockchain and cryptocurrency basics, for a classmate with no crypto background. It is built from 8 ingested sources (see <code>../raw/</code>).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Page</th>
+<th>What it covers</th>
+<th>Sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a class="wl" href="#why-crypto">why-crypto</a></td>
+<td>The trust problem, middlemen, double-spending</td>
+<td>S1 S5 S7</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a class="wl" href="#blockchain-basics">blockchain-basics</a></td>
+<td>Blocks, hashes, the chain</td>
+<td>S1 S2 S5</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a class="wl" href="#p2p-network">p2p-network</a></td>
+<td>Nodes, peer-to-peer, how a transaction spreads</td>
+<td>S1 S2 S5</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a class="wl" href="#consensus">consensus</a></td>
+<td>Proof of Work vs Proof of Stake</td>
+<td>S1 S2 S6</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a class="wl" href="#bitcoin">bitcoin</a></td>
+<td>Bitcoin, keys, signatures, supply</td>
+<td>S1 S3 S5 S7</td>
+</tr>
+<tr>
+<td>5b</td>
+<td><a class="wl" href="#wallets-and-keys">wallets-and-keys</a></td>
+<td>Public/private keys, seed phrase, custody</td>
+<td>S1 S5 S8</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a class="wl" href="#ethereum">ethereum</a></td>
+<td>EVM, ETH, smart contracts</td>
+<td>S2 S5</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a class="wl" href="#stablecoins">stablecoins</a></td>
+<td>Types of stablecoins and how they keep their peg</td>
+<td>S3 S5 S7</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a class="wl" href="#exchanges-and-price">exchanges-and-price</a></td>
+<td>Order books, how the price is set</td>
+<td>S4 S5</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a class="wl" href="#risks-and-future">risks-and-future</a></td>
+<td>Risks, regulation, predictions</td>
+<td>S5 S6 S7</td>
+</tr>
+</tbody>
+</table>
+<h2>Sources</h2>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>Source</th>
+<th>Added by</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>Nakamoto, Bitcoin whitepaper (2008)</td>
+<td>Claude</td>
+<td>primary</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>ethereum.org, Technical intro to Ethereum</td>
+<td>Claude</td>
+<td>official docs</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>ethereum.org, Stablecoins</td>
+<td>Claude</td>
+<td>official docs</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>Crypto.com, What is an order book (2024)</td>
+<td>Claude</td>
+<td>exchange education</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>Morgan Stanley, What is cryptocurrency? A guide</td>
+<td>Pure</td>
+<td>financial guide</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>GWI, The future of cryptocurrency (~2021)</td>
+<td>Pure</td>
+<td>consumer research</td>
+</tr>
+<tr>
+<td>S7</td>
+<td>Avalanche blog, Next 10 years (2025)</td>
+<td>Pure</td>
+<td>vendor blog, opinion</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>CoinDesk, Public vs. Private Keys (2022, upd. 2024)</td>
+<td>Pure</td>
+<td>crypto education</td>
+</tr>
+</tbody>
+</table></article>
+<article id="why-crypto"><p class="pid">wiki/why-crypto.md</p><h1>Why crypto? Trust, middlemen and double-spending</h1>
+<h2>In one sentence</h2>
+<p>Crypto tries to let two people pay each other online without a bank in the middle, by replacing trust in a company with cryptographic proof <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S5">S5</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>Today, online payments go through a trusted intermediary such as a bank or card network <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S5">S5</a>.</li>
+<li>Because these payments can be reversed, the middleman has to handle disputes. This raises costs and makes very small payments impractical <a class="st" href="#src-S1">S1</a>.</li>
+<li>Digital money has a special problem called <strong>double-spending</strong>: a file can be copied, so how do you stop someone from spending the same coin twice? <a class="st" href="#src-S1">S1</a></li>
+<li>A central "mint" could check for double-spends, but then the whole system depends on that one company <a class="st" href="#src-S1">S1</a>.</li>
+<li>Bitcoin's answer is to announce every transaction publicly and have the network agree on one order of transactions, where the earliest one counts <a class="st" href="#src-S1">S1</a>.</li>
+<li>The goal, in the whitepaper's words, is "an electronic payment system based on cryptographic proof instead of trust" <a class="st" href="#src-S1">S1</a>.</li>
+<li>Bitcoin started in 2009 with the aim of peer-to-peer, censorship-resistant money <a class="st" href="#src-S5">S5</a><a class="st" href="#src-S7">S7</a>.</li>
+<li>People use crypto for peer-to-peer value transfer and for smart contracts, for example lending, trading and digital collectibles <a class="st" href="#src-S5">S5</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>It's like a shared class notebook that everyone has a copy of. If you write "Amy gave Ben 5 coins", everyone sees it, so Amy can't give those same 5 coins to Cara too.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#blockchain-basics">blockchain-basics</a> · <a class="wl" href="#p2p-network">p2p-network</a> · <a class="wl" href="#bitcoin">bitcoin</a></p>
+<h2>Sources</h2>
+<p>S1, S5, S7</p></article>
+<article id="blockchain-basics"><p class="pid">wiki/blockchain-basics.md</p><h1>Blockchain basics: blocks, hashes, the chain</h1>
+<h2>In one sentence</h2>
+<p>A blockchain is a public database that is shared and updated across many computers, where data is grouped into blocks and each block points to the one before it <a class="st" href="#src-S2">S2</a><a class="st" href="#src-S5">S5</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li><strong>Block:</strong> a group of recent transactions. A transaction only counts once it has been added to a block <a class="st" href="#src-S2">S2</a>.</li>
+<li><strong>Hash:</strong> a short fingerprint of data. Publishing the hash of a block proves the data existed at that time <a class="st" href="#src-S1">S1</a>.</li>
+<li><strong>Chain:</strong> each block includes the hash of the previous block, so the blocks link together like a chain <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S2">S2</a>.</li>
+<li>Changing one old block would change its hash, which breaks every block after it. "The data in a block cannot change without changing all subsequent blocks" <a class="st" href="#src-S2">S2</a>.</li>
+<li>Thousands of copies of the ledger are kept on computers around the world, which makes it extremely hard to alter <a class="st" href="#src-S5">S5</a>.</li>
+<li>Bitcoin adds a new block roughly every 10 minutes. Other coins have different block times <a class="st" href="#src-S5">S5</a>.</li>
+<li>On Ethereum, blocks generally hold dozens to hundreds of transactions <a class="st" href="#src-S2">S2</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>Think of a stack of numbered receipts where each receipt has the previous receipt's fingerprint printed on it. If you change receipt #3, its fingerprint changes, and receipts #4, #5, #6... no longer match.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#why-crypto">why-crypto</a> · <a class="wl" href="#p2p-network">p2p-network</a> · <a class="wl" href="#consensus">consensus</a></p>
+<h2>Sources</h2>
+<p>S1, S2, S5</p></article>
+<article id="p2p-network"><p class="pid">wiki/p2p-network.md</p><h1>Peer-to-peer networks and nodes</h1>
+<h2>In one sentence</h2>
+<p>Instead of one bank's server, a crypto network is many independent computers (nodes) that each keep a copy of the ledger and check each other's work <a class="st" href="#src-S2">S2</a><a class="st" href="#src-S5">S5</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li><strong>Peer-to-peer (P2P)</strong> means the two parties transact directly, with no financial institution in between <a class="st" href="#src-S1">S1</a>.</li>
+<li><strong>Nodes</strong> are the computers in the network. They must agree on each new block so that everyone has the same data <a class="st" href="#src-S2">S2</a>.</li>
+<li>In traditional payments a trusted intermediary validates transactions. In crypto, "a distributed network of nodes validates transactions and records them on a shared blockchain ledger" <a class="st" href="#src-S5">S5</a>.</li>
+<li>How a Bitcoin payment spreads through the network, in 6 steps <a class="st" href="#src-S1">S1</a>:</li>
+<li>The new transaction is broadcast to all nodes.</li>
+<li>Nodes collect transactions into a block.</li>
+<li>Nodes work on the proof-of-work for that block (see <a class="wl" href="#consensus">consensus</a>).</li>
+<li>The node that finds it broadcasts the block.</li>
+<li>Other nodes accept the block only if all of its transactions are valid and not already spent.</li>
+<li>Nodes show they accept it by building the next block on top of it.</li>
+<li>Nodes always treat the longest chain as the correct one. If two blocks appear at once, the tie breaks when the next block arrives <a class="st" href="#src-S1">S1</a>.</li>
+<li>Light users do not need the full chain. They can keep only block headers and verify their own payment (Simplified Payment Verification) <a class="st" href="#src-S1">S1</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>It's like a group chat where every member keeps a full copy of the message history. If one person edits their copy, everyone else's copies disagree, so the fake version gets ignored.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#blockchain-basics">blockchain-basics</a> · <a class="wl" href="#consensus">consensus</a> · <a class="wl" href="#bitcoin">bitcoin</a></p>
+<h2>Sources</h2>
+<p>S1, S2, S5</p></article>
+<article id="consensus"><p class="pid">wiki/consensus.md</p><h1>Consensus: Proof of Work vs Proof of Stake</h1>
+<h2>In one sentence</h2>
+<p>A consensus mechanism is the rule that lets thousands of nodes that don't trust each other agree on which block comes next <a class="st" href="#src-S2">S2</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>Blockchains need a consensus mechanism to reach distributed agreement <a class="st" href="#src-S2">S2</a>.</li>
+<li><strong>Proof of Work (PoW, used by Bitcoin):</strong> nodes search for a number (a nonce) that makes the block's SHA-256 hash start with enough zeros. This is hard to find but takes only one hash to check <a class="st" href="#src-S1">S1</a>.</li>
+<li>PoW is "essentially one-CPU-one-vote": influence depends on computing power, not on how many IP addresses you control <a class="st" href="#src-S1">S1</a>.</li>
+<li>To change an old block, an attacker would have to redo its work and the work of every later block. Their chance of catching up shrinks exponentially with each new block <a class="st" href="#src-S1">S1</a>.</li>
+<li>Bitcoin adjusts the difficulty so that blocks keep arriving at a steady rate <a class="st" href="#src-S1">S1</a>.</li>
+<li>Miners are rewarded with new coins plus transaction fees, which gives them a reason to stay honest <a class="st" href="#src-S1">S1</a>.</li>
+<li><strong>Proof of Stake (PoS, used by Ethereum):</strong> validators lock up (stake) ETH as collateral. Validators are picked at random to propose blocks, and others check them <a class="st" href="#src-S2">S2</a>.</li>
+<li>In PoS, staked ETH also weights validators' votes when the network chooses between competing chains (fork choice) <a class="st" href="#src-S2">S2</a>.</li>
+<li>In PoS, honest validators are rewarded. The staked ETH is collateral that can be destroyed if a validator misbehaves <a class="st" href="#src-S2">S2</a>.</li>
+<li><strong><span class="op">(opinion/observation)</span></strong> GWI notes that Bitcoin mining has become concentrated in a few large companies with lots of computing power and electricity <a class="st" href="#src-S6">S6</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>PoW is a lottery where you buy tickets with electricity. PoS is a lottery where you buy tickets by putting down a deposit, and you lose the deposit if you cheat.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#p2p-network">p2p-network</a> · <a class="wl" href="#bitcoin">bitcoin</a> · <a class="wl" href="#ethereum">ethereum</a></p>
+<h2>Sources</h2>
+<p>S1, S2, S6</p></article>
+<article id="bitcoin"><p class="pid">wiki/bitcoin.md</p><h1>Bitcoin (and keys and signatures)</h1>
+<h2>In one sentence</h2>
+<p>Bitcoin, launched in 2009, was the first cryptocurrency: a peer-to-peer electronic cash system secured by proof-of-work <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S5">S5</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>Bitcoin is the largest cryptocurrency by market capitalization <a class="st" href="#src-S5">S5</a>.</li>
+<li>It has a hard cap of 21 million coins <a class="st" href="#src-S5">S5</a>.</li>
+<li>New bitcoins are created by mining. The first transaction in each block gives new coins to the block's creator <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S5">S5</a>.</li>
+<li><strong>Keys and signatures:</strong> "We define an electronic coin as a chain of digital signatures." To pay someone, the owner signs the previous transaction together with the next owner's public key <a class="st" href="#src-S1">S1</a>.</li>
+<li>A transaction can combine several inputs and usually has two outputs: the payment and the change sent back to yourself <a class="st" href="#src-S1">S1</a>.</li>
+<li><strong>Privacy:</strong> the public can see amounts moving between public keys but not who owns them. Using a new key pair for each transaction helps <a class="st" href="#src-S1">S1</a>.</li>
+<li>Because no central authority manages it, there is limited recourse if coins are lost or stolen <a class="st" href="#src-S5">S5</a>.</li>
+<li>A famous early real-world purchase was two pizzas for 10,000 BTC in 2010 <a class="st" href="#src-S3">S3</a><a class="st" href="#src-S7">S7</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>A public key is like an account number you can share. A digital signature is like signing a cheque: it proves that the owner approved the payment. For how private keys and wallets work, see <a class="wl" href="#wallets-and-keys">wallets-and-keys</a>.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#why-crypto">why-crypto</a> · <a class="wl" href="#consensus">consensus</a> · <a class="wl" href="#wallets-and-keys">wallets-and-keys</a> · <a class="wl" href="#risks-and-future">risks-and-future</a></p>
+<h2>Sources</h2>
+<p>S1, S3, S5, S7</p></article>
+<article id="wallets-and-keys"><p class="pid">wiki/wallets-and-keys.md</p><h1>Wallets, public keys and private keys</h1>
+<h2>In one sentence</h2>
+<p>A crypto wallet holds two keys: a public key that others use to send you crypto, and a private key that proves you own it and lets you spend it <a class="st" href="#src-S8">S8</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li><strong>Public key:</strong> used to receive crypto. "Think of your public key as your mailing address." Sharing it does not let anyone take your money <a class="st" href="#src-S8">S8</a>.</li>
+<li><strong>Private key:</strong> "functions as a password to your crypto wallet and should be kept secret." Anyone who gets it can take all the crypto in that wallet <a class="st" href="#src-S8">S8</a>.</li>
+<li>To spend coins, the owner <strong>signs</strong> the transaction with the private key, and the network can't validate the transaction without that signature <a class="st" href="#src-S1">S1</a><a class="st" href="#src-S8">S8</a>.</li>
+<li>A Bitcoin coin is "a chain of digital signatures": each payment is signed over to the next owner's public key <a class="st" href="#src-S1">S1</a>.</li>
+<li>Many wallets hide the private key behind a <strong>seed phrase</strong> (secret recovery phrase), a string of random words <a class="st" href="#src-S8">S8</a>.</li>
+<li><strong>Custodial vs self-custody:</strong> exchange wallets such as Coinbase or Binance hold your private key and control the funds on your behalf <a class="st" href="#src-S8">S8</a>.</li>
+<li>A lost or stolen private key can't be recovered <a class="st" href="#src-S8">S8</a>, and with no central authority there is limited recourse <a class="st" href="#src-S5">S5</a>.</li>
+<li>Safety: write the seed phrase down, keep copies in more than one place, and never screenshot or photograph it <a class="st" href="#src-S8">S8</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>The public key is your mailbox address, which anyone can drop letters in. The private key is the only key that opens the mailbox, and there's no locksmith to call if you lose it.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#bitcoin">bitcoin</a> · <a class="wl" href="#exchanges-and-price">exchanges-and-price</a> · <a class="wl" href="#risks-and-future">risks-and-future</a></p>
+<h2>Sources</h2>
+<p>S1, S5, S8</p></article>
+<article id="ethereum"><p class="pid">wiki/ethereum.md</p><h1>Ethereum and smart contracts</h1>
+<h2>In one sentence</h2>
+<p>"Ethereum is a blockchain with a computer embedded in it": a shared computer (the EVM) that runs programs called smart contracts <a class="st" href="#src-S2">S2</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>Every Ethereum node keeps a copy of the state of one shared computer, the Ethereum Virtual Machine (EVM) <a class="st" href="#src-S2">S2</a>.</li>
+<li><strong>ETH (ether)</strong> is Ethereum's native cryptocurrency. Users pay ETH fees to run transactions. Part of each fee is burned and the rest goes to the validator, and bigger jobs cost more, which prevents spam <a class="st" href="#src-S2">S2</a><a class="st" href="#src-S5">S5</a>.</li>
+<li><strong>Smart contracts</strong> are programs uploaded to the EVM that anyone can call. They work "like a sort of vending machine": when the conditions are met, they act automatically <a class="st" href="#src-S2">S2</a>.</li>
+<li>Apps built from smart contracts are called dapps, for example marketplaces, financial tools and games <a class="st" href="#src-S2">S2</a>.</li>
+<li>Smart contracts power lending, trading and digital collectibles <a class="st" href="#src-S5">S5</a>.</li>
+<li>Ethereum is secured by Proof of Stake (see <a class="wl" href="#consensus">consensus</a>) <a class="st" href="#src-S2">S2</a>.</li>
+<li>Morgan Stanley groups crypto into digital currencies (like Bitcoin), smart-contract platforms (like Ethereum and Solana), and applications <a class="st" href="#src-S5">S5</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>A vending machine doesn't need a cashier. You insert money and press B4, and the machine follows its rules and gives you the snack. A smart contract does the same with digital assets.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#consensus">consensus</a> · <a class="wl" href="#stablecoins">stablecoins</a> · <a class="wl" href="#exchanges-and-price">exchanges-and-price</a></p>
+<h2>Sources</h2>
+<p>S2, S5</p></article>
+<article id="stablecoins"><p class="pid">wiki/stablecoins.md</p><h1>Stablecoins</h1>
+<h2>In one sentence</h2>
+<p>Stablecoins are crypto tokens designed to stay at a fixed value, usually $1, so you get crypto's speed without its price swings <a class="st" href="#src-S3">S3</a><a class="st" href="#src-S5">S5</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>They exist because normal crypto prices are volatile, which makes them awkward for everyday payments <a class="st" href="#src-S3">S3</a>.</li>
+<li><strong>Fiat-backed</strong> (USDT, USDC): each token is backed 1:1 by dollars held by an issuer. Pro: very stable. Con: centralized, and you need audits to trust the reserves <a class="st" href="#src-S3">S3</a><a class="st" href="#src-S5">S5</a>.</li>
+<li><strong>Crypto-backed</strong> (DAI/USDS): backed by more crypto than it is worth, for example at least $2 of crypto for each $1 coin. If the collateral's price falls, the coin can lose its peg <a class="st" href="#src-S3">S3</a>.</li>
+<li><strong>Commodity-backed</strong> (Pax Gold): backed by gold. You must trust the issuer <a class="st" href="#src-S3">S3</a>.</li>
+<li><strong>Algorithmic:</strong> no collateral. An algorithm grows or shrinks the supply to hold the price, and you must trust the algorithm <a class="st" href="#src-S3">S3</a>.</li>
+<li>Even Tether "can deviate from $1 under market stress" <a class="st" href="#src-S5">S5</a>.</li>
+<li>Uses: global transfers, trading pairs on exchanges, and predictable payments <a class="st" href="#src-S3">S3</a>.</li>
+<li>Size: the stablecoin market was about $235B as of March 2025 <a class="st" href="#src-S7">S7</a>. ethereum.org's table lists USDT at about $175B (no as-of date) <a class="st" href="#src-S3">S3</a>.</li>
+<li><strong><span class="op">(opinion)</span></strong> "Stablecoins are crypto's first product-market-fit" <a class="st" href="#src-S7">S7</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>It's like a casino chip that is always worth exactly $1. You use it because it moves fast inside the system, not because you expect its value to change.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#ethereum">ethereum</a> · <a class="wl" href="#exchanges-and-price">exchanges-and-price</a> · <a class="wl" href="#risks-and-future">risks-and-future</a></p>
+<h2>Sources</h2>
+<p>S3, S5, S7</p></article>
+<article id="exchanges-and-price"><p class="pid">wiki/exchanges-and-price.md</p><h1>Exchanges and how the price is set</h1>
+<h2>In one sentence</h2>
+<p>A crypto's price is not set by any company. It comes from buyers and sellers whose orders are matched on exchanges <a class="st" href="#src-S4">S4</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>One common way to get crypto is to buy it on an exchange. Others include rewards from some credit cards or shopping sites <a class="st" href="#src-S5">S5</a>.</li>
+<li>An <strong>order book</strong> is "a list of pending buy and sell orders for a cryptocurrency on an exchange" <a class="st" href="#src-S4">S4</a>.</li>
+<li><strong>Bids</strong> are prices buyers will pay. <strong>Asks</strong> are prices sellers will accept <a class="st" href="#src-S4">S4</a>.</li>
+<li>The <strong>spread</strong> is the gap between the highest bid and the lowest ask. A smaller spread usually means higher liquidity <a class="st" href="#src-S4">S4</a>.</li>
+<li>A <strong>market order</strong> buys or sells right away at the best available price. A <strong>limit order</strong> waits for a price you choose <a class="st" href="#src-S4">S4</a>.</li>
+<li>When a buy order meets a matching sell order, the exchange matches them automatically. This constant matching is <strong>price discovery</strong> <a class="st" href="#src-S4">S4</a>.</li>
+<li><strong>Slippage</strong> happens when your order fills at a worse price than expected, which is common when the market is volatile or the order book is thin <a class="st" href="#src-S4">S4</a>.</li>
+<li>Centralized exchanges with order books dominate today. Decentralized exchanges like Uniswap usually use <strong>automated market makers</strong>, where you trade against a pool of tokens priced by a formula <a class="st" href="#src-S4">S4</a>.</li>
+<li>Direct peer-to-peer trading is also possible but is usually less efficient for liquidity <a class="st" href="#src-S4">S4</a>.</li>
+<li>Exchanges and wallets have been hacked or have failed in the past, and there is no deposit insurance <a class="st" href="#src-S5">S5</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>It's like an auction that never closes. Buyers shout their highest offer, sellers shout their lowest price, and a trade happens whenever the two meet.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#stablecoins">stablecoins</a> · <a class="wl" href="#risks-and-future">risks-and-future</a></p>
+<h2>Sources</h2>
+<p>S4, S5</p></article>
+<article id="risks-and-future"><p class="pid">wiki/risks-and-future.md</p><h1>Risks and the future</h1>
+<h2>In one sentence</h2>
+<p>Crypto is very volatile and comes with few safety nets, and its future depends heavily on regulation and adoption, which no one can predict for sure <a class="st" href="#src-S5">S5</a><a class="st" href="#src-S6">S6</a>.</p>
+<h2>Key ideas</h2>
+<ul>
+<li>Crypto "is characterized by significant volatility", more than the S&amp;P 500. One asset fell more than 50% in a single day <a class="st" href="#src-S5">S5</a>.</li>
+<li>Crypto is not legal tender and has no government backing <a class="st" href="#src-S5">S5</a>.</li>
+<li>If coins are lost or stolen there is limited recourse, and exchanges and wallets have been hacked <a class="st" href="#src-S5">S5</a>.</li>
+<li>Other risks include software bugs, government action, concentration of holdings among a few addresses, fraud, and future threats to encryption such as quantum computing <a class="st" href="#src-S5">S5</a>.</li>
+<li>Real scandals and hacks have happened, for example the ByBit hack and the $Libra scandal <a class="st" href="#src-S7">S7</a>.</li>
+<li>Investors support regulation because they see it as a way to reduce fraud and volatility. They also fear it could limit crypto's peer-to-peer nature and anonymity <a class="st" href="#src-S6">S6</a>.</li>
+<li>Institutions such as banks are entering crypto <a class="st" href="#src-S6">S6</a><a class="st" href="#src-S7">S7</a>.</li>
+<li><strong><span class="op">(opinion/prediction)</span></strong> Tokenization of real-world assets, such as real estate and stocks, will grow <a class="st" href="#src-S7">S7</a>.</li>
+<li><strong><span class="op">(opinion/prediction)</span></strong> The "Wild West" phase is ending as governments regulate <a class="st" href="#src-S7">S7</a>.</li>
+<li>Morgan Stanley's advice: "proceed with caution" and get educated first <a class="st" href="#src-S5">S5</a>.</li>
+</ul>
+<h2>Beginner analogy (AI-written, not from a source)</h2>
+<p>It's like a new city with no police yet. Exciting things are being built, but if someone steals from you, there may be nobody to call.</p>
+<h2>Related</h2>
+<p><a class="wl" href="#exchanges-and-price">exchanges-and-price</a> · <a class="wl" href="#stablecoins">stablecoins</a> · <a class="wl" href="#why-crypto">why-crypto</a></p>
+<h2>Sources</h2>
+<p>S5, S6, S7</p></article>
+<article id="log"><p class="pid">wiki/log.md</p><h1>Wiki operation log</h1>
+<ul>
+<li>2026-11-23 14:26 | discuss | Pure picked the topic. Claude proposed 8 pages and 7 sources.</li>
+<li>2026-11-23 14:48 | discuss | Pure confirmed the audience (classmate, no background). Pure added stablecoins, price/exchanges, P2P and "why crypto", and gave 4 links.</li>
+<li>2026-11-23 ~15:00 | ingest | Fetched S1–S7. The Investopedia link Pure gave was blocked (SITE_BLOCKED), so it was not ingested. The direct curl fetch was blocked by the sandbox proxy, so a web-fetch tool was used instead.</li>
+<li>2026-11-23 ~15:00 | ingest-check | Flagged ⚠ in S6: "nearly $5 billion by 2030" is inconsistent with S3 (USDT ≈ $175B). S7 was labeled as opinion.</li>
+<li>2026-11-23 ~15:10 | generate | Wrote 9 concept pages + the index from raw/ notes.</li>
+<li>2026-11-23 ~15:20 | lint run 1 | Structural lint PASSED (0 problems). The lint script was first tested on a corrupted copy and caught 4 planted errors.</li>
+<li>2026-11-23 ~15:25 | grounding check run 1 | Claude compared each wiki claim with the raw notes and found 3 problems: an overclaim ("most people"), a term that isn't in the source ("slashed"), and a factual claim hidden inside an AI-written analogy (private keys). All 3 were fixed. Gap: no source covers wallets or private keys.</li>
+<li>2026-11-23 16:04 | discuss (run 2) | Pure asked for more sources. Claude pointed to the wallets/keys gap. Pure's Investopedia private-key link was blocked again, so Pure chose the CoinDesk alternative.</li>
+<li>2026-11-23 16:05 | ingest S8 + ingest check | Fetched OK. The grounding check was MOVED EARLIER into ingest: the S8 claim "public key encrypts transactions" conflicts with S1 (transactions are signed, not encrypted), so it was flagged ⚠ in raw/ before any wiki text was written.</li>
+<li>2026-11-23 16:10 | generate | New page wallets-and-keys. The bitcoin.md gap note was replaced with a link.</li>
+<li>2026-11-23 16:12 | grounding check run 2 | 1 problem: "Not your keys" was put in quotes as if from S8, but the phrase isn't clearly on the page. Rewrote it using S8 + S5 wording.</li>
+<li>2026-11-23 16:15 | slides | Added slide 5b "Wallets &amp; keys" (deck is now 16 slides).</li>
+</ul></article><section id="sources"><h2>Raw sources</h2></section><article id="src-S1"><p class="pid">raw/S1-bitcoin-whitepaper.md</p><h2>S1</h2><div class="meta"><div><b>id</b> S1</div><div><b>title</b> Bitcoin: A Peer-to-Peer Electronic Cash System</div><div><b>author</b> Satoshi Nakamoto</div><div><b>date</b> 2008 (paper says &quot;as of 2008&quot;)</div><div><b>url</b> https://courses.csail.mit.edu/6.857/2015/files/L07-nakamoto-bitcoin-a-peer-to-peer-electronic-cash-system.pdf</div><div><b>fetched</b> 2026-11-23 (web-fetch, full PDF text)</div><div><b>added_by</b> Claude (proposed), Pure approved source list</div><div><b>type</b> primary source</div></div><h2>Notes (paraphrased by section)</h2>
+<ul>
+<li>Abstract: P2P electronic payments without a financial institution; double-spending solved by timestamping transactions into a chain of hash-based proof-of-work; secure while honest nodes control most CPU power.</li>
+<li>§1: Online payments rely on trusted third parties (financial institutions). Reversible payments need mediation → higher costs, no small payments, merchants wary. Goal: cryptographic proof instead of trust, so two parties transact directly.</li>
+<li>§2: A coin is a chain of digital signatures: each owner signs a hash of the previous transaction + next owner's public key. Payee can't tell if an earlier owner double-spent; a central mint could check but then everything depends on it. Fix: announce transactions publicly and agree on one order; earliest counts.</li>
+<li>§3: Timestamp server: hash a block of items and publish; each timestamp includes the previous hash, forming a chain.</li>
+<li>§4: Proof-of-work (like Hashcash): find a nonce so SHA-256 hash starts with N zero bits; hard to find, one hash to verify. Changing a block means redoing it and all later blocks. "One-CPU-one-vote"; longest chain = most work. Difficulty adjusts to target a set number of blocks per hour.</li>
+<li>§5 Network steps: broadcast tx → nodes collect into block → find PoW → broadcast block → accept only if all tx valid and unspent → build next block on its hash. Longest chain is correct; ties break when next block arrives.</li>
+<li>§6 Incentive: first tx in a block creates new coins for the block creator; plus transaction fees. Greedy attacker earns more by following rules.</li>
+<li>§7–9: Merkle tree pruning; header ~80 bytes, ~4.2 MB/year at 1 block / 10 min; SPV light clients; tx have multiple inputs/outputs (payment + change).</li>
+<li>§10 Privacy: public keys are anonymous; public sees amounts moving between keys, not identities. New key pair per tx.</li>
+<li>§11: Attacker can only try to reverse his own recent spend; cannot create value or steal. Catch-up probability drops exponentially with confirmations z (e.g. q=0.10 → z=5 for P&lt;0.1%).</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>§1 "What is needed is an electronic payment system based on cryptographic proof instead of trust"</li>
+<li>§2 "We define an electronic coin as a chain of digital signatures."</li>
+<li>§4 "Proof-of-work is essentially one-CPU-one-vote."</li>
+<li>§5 "Nodes always consider the longest chain to be the correct one and will keep working on extending it."</li>
+<li>§11 "An attacker can only try to change one of his own transactions to take back money he recently spent."</li>
+</ul></article>
+<article id="src-S2"><p class="pid">raw/S2-ethereum-intro.md</p><h2>S2</h2><div class="meta"><div><b>id</b> S2</div><div><b>title</b> Technical intro to Ethereum</div><div><b>publisher</b> ethereum.org</div><div><b>date</b> not shown</div><div><b>url</b> https://ethereum.org/developers/docs/intro-to-ethereum.md</div><div><b>fetched</b> 2026-11-23 (web-fetch, full page)</div><div><b>added_by</b> Claude (proposed)</div><div><b>type</b> official documentation</div></div><h2>Notes</h2>
+<ul>
+<li>Blockchain = a public database updated and shared across many computers. "Block": data stored in consecutive groups; a tx succeeds only once added to a block. "Chain": each block cryptographically references its parent; changing a block requires changing all later blocks and network consensus.</li>
+<li>Nodes must agree on each new block → consensus mechanism needed.</li>
+<li>Ethereum uses proof-of-stake: block producers stake ETH as collateral and run validator software; validators are randomly selected to propose blocks; others check; rewards and penalties encourage honesty.</li>
+<li>Ethereum = "a blockchain with a computer embedded in it": a single canonical computer, the EVM; every node keeps its state.</li>
+<li>ETH is the native cryptocurrency; requests pay an ETH fee ("bounty"), part burned, rest to the worker; scales with resources; prevents spam. ETH also secures the network (rewards, slashable collateral, vote weight). (Page does not use the word "gas".)</li>
+<li>Smart contracts: reusable programs uploaded to the EVM, called with parameters; "like a sort of vending machine". Anyone can publish/call for a fee. Apps on them = dapps (marketplaces, financial instruments, games).</li>
+<li>Accounts hold ETH; a transaction = a fulfilled request + its state change.</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"A blockchain is a public database that is updated and shared across many computers in a network."</li>
+<li>"The data in a block cannot change without changing all subsequent blocks"</li>
+<li>"Ethereum is a blockchain with a computer embedded in it."</li>
+<li>"you can think of a smart contract like a sort of vending machine"</li>
+</ul></article>
+<article id="src-S3"><p class="pid">raw/S3-ethereum-stablecoins.md</p><h2>S3</h2><div class="meta"><div><b>id</b> S3</div><div><b>title</b> Stablecoins explained: What are they for?</div><div><b>publisher</b> ethereum.org</div><div><b>date</b> site last updated 2026-11-19</div><div><b>url</b> https://ethereum.org/en/stablecoins/</div><div><b>fetched</b> 2026-11-23 (web-fetch)</div><div><b>added_by</b> Claude, for Pure&#x27;s request to add stablecoins</div><div><b>type</b> official documentation</div></div><h2>Notes</h2>
+<ul>
+<li>Stablecoins are tokens designed to stay at a fixed value even when ETH's price changes; "cryptocurrencies without the volatility".</li>
+<li>Why: crypto prices swing, so spending it has an opportunity cost; stablecoins allow everyday payments. Example: 2010, two pizzas for 10,000 BTC (worth $41 then).</li>
+<li>Most are backed by reserve collateral; some use algorithms.</li>
+<li>Fiat-backed (USDC, USDT): bought/redeemed 1:1 with dollars; reserves back value. + stable; − centralized issuer, needs audits of reserves.</li>
+<li>Crypto-backed (DAI/USDS, USDe): overcollateralised (e.g. $1 coin backed by ≥$2 crypto); if collateral falls, more must be locked or the coin can lose value. + transparent, decentralized; − less stable.</li>
+<li>Precious-metal-backed (Pax Gold, Tether Gold): − centralized, must trust issuer.</li>
+<li>Algorithmic: no collateral; algorithm expands/shrinks supply to hold target price. − must trust the algorithm; balance changes.</li>
+<li>Uses: global transfers, trading pairs, predictable payments, lending for interest.</li>
+<li>Market table (no as-of date): USDT ≈ $174.6B, USDC ≈ $68.4B market cap. Time-sensitive.</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"Stablecoins are Ethereum tokens designed to stay at a fixed value, even when the price of ETH changes."</li>
+<li>"Stablecoins are cryptocurrencies without the volatility."</li>
+</ul></article>
+<article id="src-S4"><p class="pid">raw/S4-cryptocom-order-book.md</p><h2>S4</h2><div class="meta"><div><b>id</b> S4</div><div><b>title</b> What Is an Order Book and How Does It Work?</div><div><b>publisher</b> Crypto.com University</div><div><b>date</b> 2024-04-09</div><div><b>url</b> https://crypto.com/en/university/what-is-a-crypto-order-book</div><div><b>fetched</b> 2026-11-23 (web-fetch)</div><div><b>added_by</b> Claude, for Pure&#x27;s request &quot;how the price is set and exchange</div><div><b>type</b> exchange education article (vendor; not investment advice)</div></div><h2>Notes</h2>
+<ul>
+<li>An order book = list of pending buy and sell orders on an exchange; used to match orders and determine market prices.</li>
+<li>Bids = buy prices; asks/offers = sell prices; book shows quantity at each price level.</li>
+<li>Continuous price discovery as new orders arrive and are matched.</li>
+<li>Bid-ask spread = highest bid vs lowest ask gap; smaller spread → higher liquidity.</li>
+<li>Liquidity = ease of trading without big price moves. Depth = total volume across price levels.</li>
+<li>Limit order = set a specific price; market order = execute at best current price. Exchange auto-matches a market buy against the best ask (and vice versa).</li>
+<li>Slippage: fill at a different price than expected, due to volatility / thin depth.</li>
+<li>Order books used on centralized and decentralized exchanges; CEXs with order books dominate. DEXs like Uniswap typically use Automated Market Makers (liquidity pools + pricing formula) instead.</li>
+<li>Alternatives: OTC, direct P2P trading (called relatively inefficient for liquidity), atomic swaps.</li>
+<li>Page does NOT define "last traded price".</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"An order book is a list of pending buy and sell orders for a cryptocurrency on an exchange."</li>
+<li>"A smaller bid-ask spread typically indicates higher liquidity in the market"</li>
+<li>"Order books can be used in both centralised and decentralised exchanges"</li>
+</ul></article>
+<article id="src-S5"><p class="pid">raw/S5-morgan-stanley-guide.md</p><h2>S5</h2><div class="meta"><div><b>id</b> S5</div><div><b>title</b> What Is Cryptocurrency? A Guide</div><div><b>publisher</b> Morgan Stanley Wealth Management</div><div><b>date</b> not shown; page metadata lastModified 2026-04-15</div><div><b>url</b> https://www.morganstanley.com/insights/articles/what-is-cryptocurrency-guide</div><div><b>fetched</b> 2026-11-23 (web-fetch)</div><div><b>added_by</b> Pure</div><div><b>type</b> financial institution guide (has conflicts-of-interest disclosure)</div></div><h2>Notes</h2>
+<ul>
+<li>Crypto = digital assets on blockchain networks that record/verify transactions without a central authority like a bank.</li>
+<li>Uses: peer-to-peer value transfer; smart contracts (lending, trading, collectibles).</li>
+<li>Bitcoin: largest by market cap, first (2009), created by mining, hard cap 21 million coins; blocks roughly every 10 minutes.</li>
+<li>Public ledger copied on thousands of computers → extremely hard to alter.</li>
+<li>Traditional payments use a trusted intermediary (bank, card network); crypto uses a distributed network of nodes that validates transactions.</li>
+<li>Tens of thousands of cryptocurrencies, a few dominate. Groups: digital currencies, smart-contract platforms, applications.</li>
+<li>Ethereum: a "virtual computer" for smart contracts; fees paid in ether. Solana: fast, low-cost; SOL staked for rewards.</li>
+<li>Tether (USDT): dollar-pegged, ~$1 but can deviate under stress. USDC tracks the US dollar.</li>
+<li>Ways to get exposure: buy on an exchange; rewards; ETPs/ETFs/futures.</li>
+<li>Risks: encryption could be broken (quantum), software bugs, government action, high volatility (more than S&amp;P 500), concentration of holdings, no central recourse if lost/stolen, illegal activity and fraud. Disclosures: not legal tender, no government backing, exchanges/wallets have been hacked or failed, no deposit insurance, one asset fell &gt;50% in a day, uncertain taxes.</li>
+<li>Advice: proceed with caution, get educated.</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"Bitcoin has a hard cap of 21 million coins"</li>
+<li>"a distributed network of nodes validates transactions and records them on a shared blockchain ledger."</li>
+<li>"Cryptocurrency investing presents unique risks and is characterized by significant volatility"</li>
+<li>"If no one were to accept digital currencies, virtual currency products would very likely become worthless."</li>
+</ul></article>
+<article id="src-S6"><p class="pid">raw/S6-gwi-future-of-crypto.md</p><h2>S6</h2><div class="meta"><div><b>id</b> S6</div><div><b>title</b> To the moon: The future of cryptocurrency</div><div><b>publisher</b> GWI (GlobalWebIndex), by Doug Gorman</div><div><b>date</b> not shown; text suggests ~2021 (inference)</div><div><b>url</b> https://www.gwi.com/reports/future-of-cryptocurrency</div><div><b>fetched</b> 2026-11-23 (web-fetch; chart values not extractable)</div><div><b>added_by</b> Pure</div><div><b>type</b> consumer-research article</div></div><h2>Notes</h2>
+<ul>
+<li>Crypto grew fast but its future is uncertain; framed as paradoxes.</li>
+<li>Claims analysts estimate global crypto market will more than triple by 2030 "to a valuation of nearly $5 billion" (cited to CoinDesk). ⚠ Looks inconsistent with trillion-dollar scale market caps elsewhere; flagged in lint.</li>
+<li>Many first-time traders during the pandemic; meme-stock effect.</li>
+<li>US: consumers over 35 are nearly half (47%) of those expecting to invest in crypto in next 6 months (no sample/year given).</li>
+<li>Mining concentrated in big players; a Tesla investment moved BTC price +20% in a day.</li>
+<li>Institutions entering (US Bank custody) — may threaten crypto's independence from traditional finance.</li>
+<li>Investors support regulation (legitimacy, less fraud/volatility) but fear it limits P2P nature/anonymity. They trust payment companies/exchanges more than governments to lead.</li>
+<li>"50 [%?] of crypto investors would be comfortable using it to pay for online shopping" (unit unclear).</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"Its growth has been faster than ever, yet its future has never been so unclear."</li>
+<li>"Investors believe in regulation, yet are worried about many of the impacts that regulation will bring about."</li>
+</ul></article>
+<article id="src-S7"><p class="pid">raw/S7-avalanche-future.md</p><h2>S7</h2><div class="meta"><div><b>id</b> S7</div><div><b>title</b> The Future of Blockchain and Cryptocurrency: The Next 10 Years</div><div><b>publisher</b> Avalanche blog (&quot;By Avax Developers&quot;)</div><div><b>date</b> shown as 4.3.2025 (likely 2025-04-03)</div><div><b>url</b> https://www.avalanche.com/about/blog/the-future-of-blockchain-and-cryptocurrency-the-next-10-years</div><div><b>fetched</b> 2026-11-23 (web-fetch)</div><div><b>added_by</b> Pure</div><div><b>type</b> vendor blog — mostly OPINION / PREDICTION</div></div><h2>Notes</h2>
+<ul>
+<li>Fact: Bitcoin started 2009 aiming for P2P, censorship-resistant money; 2010 pizza purchase for 10,000 BTC.</li>
+<li>Opinion: crypto "has hit the mainstream" but isn't mature; cites scandals (Hawk Tuah coin, $Libra, ByBit hack).</li>
+<li>Definitions: tokenomics = supply, governance, incentives of a token. Tokenization = blockchain tokens tied to real-world assets, fractional, traded.</li>
+<li>Prediction: tokenization of real estate, commodities, stocks, IP, carbon credits.</li>
+<li>Stated: stablecoin market cap $235B as of March 2025. Stablecoins "have the potential" to cut cross-border costs up to 80% (unsourced).</li>
+<li>Opinion: "Stablecoins are crypto's first product-market-fit." CBDCs = central-bank digital currencies, lack decentralization.</li>
+<li>Predictions: regulation ends the "Wild West"; institutions converge with blockchain; better tokenomics; DAOs as digital corporations.</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"Stablecoins are crypto's first product-market-fit."</li>
+<li>"Tokenization will facilitate trade and make fractional ownership a norm."</li>
+</ul></article>
+<article id="src-S8"><p class="pid">raw/S8-coindesk-keys.md</p><h2>S8</h2><div class="meta"><div><b>id</b> S8</div><div><b>title</b> A Crypto Must-Know: Public vs. Private Keys</div><div><b>author</b> Benedict George</div><div><b>publisher</b> CoinDesk</div><div><b>date</b> published 2022-08-04, updated 2024-04-09</div><div><b>url</b> https://www.coindesk.com/learn/a-crypto-must-know-public-vs-private-keys</div><div><b>fetched</b> 2026-11-23 16:05 (web-fetch, run 2)</div><div><b>added_by</b> Pure (chose option 1 after the Investopedia private-key link was blocked)</div><div><b>type</b> crypto news / education article</div></div><h2>Notes</h2>
+<ul>
+<li>A crypto wallet comes with two keys, public and private, that do complementary jobs.</li>
+<li>Public key: used to receive crypto; like a mailing address or account number that anyone can know. Sharing it does not let anyone withdraw your money.</li>
+<li>Private key: proves ownership. The wallet needs it to "sign" transactions that spend your funds, and the network can't validate a transaction without it.</li>
+<li>Private key = "a password to your crypto wallet", so keep it secret. Anyone who gets it can take all the crypto in that wallet.</li>
+<li>Private keys are numbers. Wallets often hide them behind a <strong>seed phrase</strong> ("secret recovery phrase"), which is a string of random words (example: MetaMask).</li>
+<li>Exchange wallets and custodians (e.g. Coinbase, Binance) hold the private key for you and control the funds on your behalf.</li>
+<li>Safety: write the key or seed phrase down and keep copies in several places. Don't screenshot or photograph it, because hackers target those copies.</li>
+<li>If the key is lost or stolen, there is "no way to recover it".</li>
+<li>⚠ CLAIM FLAGGED AT INGEST: "The public key encrypts transactions, which can be decrypted only by the corresponding private key". This conflicts with S1, where transactions are <em>signed</em> with digital signatures, not encrypted. DO NOT USE.</li>
+<li>Not covered: how an address is derived, wallet types (hardware/software), seed phrase length, custody pros/cons.</li>
+</ul>
+<h2>Quotes</h2>
+<ul>
+<li>"Think of your public key as your mailing address."</li>
+<li>"The private key functions as a password to your crypto wallet and should be kept secret."</li>
+<li>"Don't take a screenshot of it or take a picture with your phone as these digital copies are often targeted by hackers."</li>
+</ul></article></main></div>
+</body></html>

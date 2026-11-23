@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crypto Basics LLM Wiki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#EEF1F5;--card:#FFFFFF;--ink:#152233;--muted:#5A6878;--line:#D5DCE5;--accent:#2747A3;--hash:#A86A00;--soft:#E6ECF8;--warn:#9A3B1E;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root{--bg:#0F1620;--card:#17212E;--ink:#E6ECF3;--muted:#9AA8B8;--line:#2A3746;--accent:#8FA8F5;--hash:#E3B04B;--soft:#1F2C40;--warn:#F0A07F;color-scheme:dark}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);padding:32px max(16px,env(safe-area-inset-left,0px))}
+main{max-width:960px;margin:0 auto;display:grid;gap:22px}
+h1{font:700 clamp(30px,5vw,48px)/1.1 var(--display);margin:0} h2{font:600 22px var(--display);margin:0 0 10px}
+.eyebrow{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.lead{color:var(--muted);max-width:65ch;margin:10px 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;color:inherit;text-decoration:none}
+a.card:hover{border-color:var(--accent)} .card b{font:600 18px var(--display);display:block;margin-bottom:4px;color:var(--accent)}
+.card span{color:var(--muted);font-size:14px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 24px;min-width:0}
+.mermaid{overflow-x:auto;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px} th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.tw{overflow-x:auto} code{font-family:var(--mono);font-size:.9em;color:var(--hash)}
+a{color:var(--accent)} ul{margin:0;padding-left:1.2em}
+footer{color:var(--muted);font-size:13px}
+</style></head><body><main>
+<header><p class="eyebrow">Generative AI homework · LLM Wiki → teaching HTML slides</p>
+<h1>Crypto Basics LLM Wiki</h1>
+<p class="lead">I built an LLM-maintained wiki about blockchain and cryptocurrency for beginners, using a "discuss first, then generate" (先討論、後生成) process. It has 10 concept pages from 8 ingested sources. Then I had the AI build a teaching slide deck using <b>only</b> the wiki as its knowledge source. Every slide links back to the wiki page it came from.</p></header>
+
+<div class="cards">
+ <a class="card" href="slides/"><b>Teaching slides →</b><span>16 slides, "Crypto from zero". Use ← → to move, C for contents, F for fullscreen.</span></a>
+ <a class="card" href="wiki/"><b>The LLM Wiki →</b><span>10 pages. Every claim has a source tag that links to its raw note.</span></a>
+ <a class="card" href="https://github.com/nahathaiw/crypto-llm-wiki"><b>Source files →</b><span><code>raw/</code>, <code>wiki/*.md</code>, <code>AGENTS.md</code>, check scripts and run logs.</span></a>
+</div>
+
+<section><h2>Loop / graph design</h2>
+<pre class="mermaid">
+flowchart TD
+  A[Discuss: topic, audience, pages, sources] --> B[Fetch source]
+  B --> C{Ingest check: loaded? date? fact or opinion? conflicts?}
+  C -- blocked --> B2[Replace source] --> B
+  C -- ok, flag bad claims --> D[Write raw/S#.md]
+  D -->|repeat per source| B
+  D --> E[Generate / update wiki pages with source tags]
+  E --> F{Lint script}
+  F -- fail --> E
+  F -- pass --> G{Grounding check: claim vs raw note}
+  G -- fail --> E
+  G -- pass --> H[Query wiki → slide outline]
+  H --> I[Generate HTML slides]
+  I --> J{Slide check: traceability + claim review}
+  J -- fact missing from wiki --> E
+  J -- wording / tag issue --> I
+  J -- pass --> K{Render check: desktop + phone}
+  K -- layout bug --> I
+  K -- pass --> L[Publish]
+</pre>
+<p>Full explanation (which steps repeat, where the checks are, and why): <a href="https://github.com/nahathaiw/crypto-llm-wiki/blob/main/loop-design.md">loop-design.md</a></p></section>
+
+<section><h2>Real runs and check records</h2>
+<div class="tw"><table>
+<tr><th>Run</th><th>What the checks caught</th></tr>
+<tr><td>Run 1 (7 sources)</td><td>Fetch was blocked twice. The ingest check flagged a wrong "$5 billion" figure. The grounding check found 3 claims that said more than their sources. The slide check found 2 slides missing source tags plus a checker bug, and 1 slide fact that was missing from the wiki (we looped back to the wiki). The render check found a phone layout bug.</td></tr>
+<tr><td>Run 2 (+1 source on wallets &amp; keys)</td><td>The grounding check was moved earlier, into ingest, and it stopped a wrong claim ("public key encrypts transactions") before generation. Only 1 grounding fix was needed after generation.</td></tr>
+</table></div>
+<p>Details: <a href="https://github.com/nahathaiw/crypto-llm-wiki/blob/main/checks/run-record.md">checks/run-record.md</a></p></section>
+
+<footer>AI use: the wiki pages, slides, scripts and this site were generated with Claude (Anthropic), based on my topic, audience, subtopic and source choices. The full process is documented in the repo. Not investment advice.</footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});</script>
+</body></html>

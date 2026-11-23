@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Crypto From Zero</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: full-height stage; slide card scales to the viewport (16:9 on wide screens, full-height card on phones); top bar = progress + section + contents; footer links each slide to its wiki page */
+:root{
+  --bg:#EEF1F5; --card:#FFFFFF; --ink:#152233; --muted:#5A6878; --line:#D5DCE5;
+  --accent:#2747A3; --hash:#A86A00; --soft:#E6ECF8; --warn:#9A3B1E; --shadow:0 1px 2px rgba(21,34,51,.06),0 8px 28px rgba(21,34,51,.08);
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1620; --card:#17212E; --ink:#E6ECF3; --muted:#9AA8B8; --line:#2A3746;
+  --accent:#8FA8F5; --hash:#E3B04B; --soft:#1F2C40; --warn:#F0A07F; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1620; --card:#17212E; --ink:#E6ECF3; --muted:#9AA8B8; --line:#2A3746;
+  --accent:#8FA8F5; --hash:#E3B04B; --soft:#1F2C40; --warn:#F0A07F; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);display:flex;flex-direction:column;margin:0;overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;box-sizing:border-box}
+/* top bar */
+.top{display:flex;align-items:center;gap:12px;max-width:1240px;width:100%;margin:0 auto 10px;font:12px/1 var(--mono);color:var(--muted)}
+.top .deck{font-weight:600;color:var(--ink);white-space:nowrap}
+.top .sec{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+.bar{position:relative;height:3px;background:var(--line);max-width:1240px;width:100%;margin:0 auto 12px;border-radius:2px;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);width:0;transition:width .25s}
+.iconbtn{font:600 12px var(--mono);background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+.iconbtn:hover{background:var(--soft)}
+/* stage + slide */
+.stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;position:relative}
+.slide{display:none;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+  width:min(1240px,100%,calc((100vh - 150px) * 16 / 9));aspect-ratio:16/9;box-sizing:border-box;
+  font-size:clamp(14px,min(1.45vw,2.6vh),21px);line-height:1.5;
+  padding:2.4em 3em 0;flex-direction:column;overflow:auto}
+.slide.on{display:flex;animation:in .28s ease-out}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}.bar i{transition:none}}
+@media (max-width:700px){.slide{aspect-ratio:auto;height:100%;width:100%;font-size:15px;padding:1.4em 1.2em 0}.arrow{display:none}.top .deck{display:none}}
+.eyebrow{font:600 .7em/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 .7em}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0 0 .6em;line-height:1.1;letter-spacing:-.01em}
+h1{font-size:3.2em} h2{font-size:2em}
+p,li{max-width:62ch;margin:0} .body p+p{margin-top:.6em}
+ul,ol{margin:0;padding-left:1.2em;display:grid;gap:.5em}
+li::marker{color:var(--accent)}
+.body{flex:1 0 auto}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line);margin-top:1em;padding:.7em 0 .8em;
+  font:.7em/1.4 var(--mono);color:var(--muted)}
+.foot b{color:var(--hash);font-weight:600}
+.foot a{color:inherit;text-decoration:none;border-bottom:1px dotted var(--hash)} .foot a:hover{color:var(--hash)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2em;align-items:start} .cols>*{min-width:0}
+@media (max-width:700px){.cols{grid-template-columns:1fr;gap:1em}}
+.box{background:var(--soft);border-radius:8px;padding:1em 1.2em}
+.quote{font:500 1.5em/1.35 var(--display);border-left:3px solid var(--accent);padding-left:.8em;margin:.3em 0 .7em}
+.mono{font-family:var(--mono);color:var(--hash)}
+table{border-collapse:collapse;width:100%;font-size:.88em} th,td{text-align:left;padding:.5em .6em;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:500;color:var(--muted)}
+tr:hover td{background:var(--soft)}
+.tw{overflow-x:auto}
+.chain{display:flex;gap:.7em;align-items:stretch;flex-wrap:wrap;margin:.3em 0 1em}
+.blk{border:1.5px solid var(--accent);border-radius:8px;padding:.7em .9em;font:.8em/1.55 var(--mono);min-width:8em;flex:1;background:var(--card)}
+.blk .t{font:600 1.05em var(--display);color:var(--accent)}
+.blk.bad{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 6%,var(--card))} .blk.bad .t{color:var(--warn)}
+.arrow{align-self:center;color:var(--muted);font:600 1.2em var(--mono)}
+.tag{display:inline-block;font:600 .7em/1 var(--mono);padding:.35em .5em;border-radius:4px;background:var(--soft);color:var(--accent);margin-right:.4em;vertical-align:middle}
+.tag.op{color:var(--warn)}
+.book{display:grid;grid-template-columns:1fr 1fr;gap:.7em;font:.85em/1.7 var(--mono)} .book>div{min-width:0}
+.ask{color:var(--warn)} .bid{color:var(--accent)}
+.quiz details{background:var(--soft);border-radius:8px;padding:.7em 1em} .quiz summary{cursor:pointer;font-weight:600}
+.quiz details[open] summary{margin-bottom:.4em}
+.quiz{display:grid;gap:.6em}
+.small{font-size:.85em;color:var(--muted)}
+/* bottom nav */
+nav{display:flex;align-items:center;justify-content:center;gap:12px;padding-top:10px;font:13px var(--mono);color:var(--muted)}
+button{font:600 14px var(--body);background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 14px;cursor:pointer}
+button:hover{background:var(--soft)} button:disabled{opacity:.4;cursor:default}
+button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:11px}
+@media (max-width:700px){.hint{display:none}}
+/* contents panel */
+.toc{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(3px);z-index:20;display:flex;justify-content:flex-end}
+.toc[hidden]{display:none}
+.toc .panel{background:var(--card);border-left:1px solid var(--line);width:min(380px,100%);height:100%;overflow:auto;box-sizing:border-box;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 16px 16px;box-shadow:var(--shadow)}
+.toc h3{font:600 14px var(--display);margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.toc ol{list-style:none;padding:0;gap:2px}
+.toc li button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:2.2em 1fr;gap:6px;width:100%;padding:8px 10px;border-radius:6px;cursor:pointer;font:14px/1.35 var(--body);color:var(--ink)}
+.toc li button:hover,.toc li button.cur{background:var(--soft)}
+.toc li button.cur{color:var(--accent);font-weight:600}
+.toc li button:focus-visible{outline:2px solid var(--accent)}
+.toc .n{font:12px/1.6 var(--mono);color:var(--muted)}
+.toc .s{display:block;font:11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+</style>
+</head><body>
+
+<div class="top"><span class="deck">Crypto from zero</span><span class="sec" id="sec"></span>
+ <button class="iconbtn" id="tocbtn" type="button" aria-haspopup="dialog">Contents</button><button class="iconbtn" id="fsbtn" type="button">Fullscreen</button></div>
+<div class="bar" aria-hidden="true"><i id="prog"></i></div>
+<div class="stage" id="stage">
+
+<section class="slide" data-wiki="index">
+ <div class="body" style="display:flex;flex-direction:column;justify-content:center">
+  <p class="eyebrow">Teaching deck · blockchain &amp; crypto basics</p>
+  <h1>Crypto from zero</h1>
+  <p style="font-size:clamp(16px,2vw,20px);color:var(--muted)">How money can move with no bank in the middle: blocks, networks, coins, stablecoins, prices and risks.</p>
+  <div class="chain" aria-hidden="true" style="max-width:40em;margin-top:.6em">
+   <div class="blk"><div class="t">#1 why</div><span class="mono">0000…→8f3a</span></div><span class="arrow">→</span>
+   <div class="blk"><div class="t">#2 how</div><span class="mono">8f3a…→c71e</span></div><span class="arrow">→</span>
+   <div class="blk"><div class="t">#3 use</div><span class="mono">c71e…→19b4</span></div>
+  </div>
+  <p class="small">For a classmate with no crypto background · All content is taken from my LLM Wiki (10 pages, 8 sources). Press C for contents, ← → to move.</p>
+ </div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#index" target="_blank" rel="noopener"><b>index</b></a></span><span>Sources: S1–S8</span></div>
+</section>
+
+<section class="slide" data-wiki="index">
+ <div class="body"><p class="eyebrow">Roadmap</p><h2>What you'll be able to explain</h2>
+  <ol>
+   <li>Why digital money needs a fix for <b>double-spending</b></li>
+   <li>What a <b>blockchain</b> is and why it is hard to change</li>
+   <li>How a <b>peer-to-peer</b> network agrees, using Proof of Work or Proof of Stake</li>
+   <li>What <b>Bitcoin</b> and <b>Ethereum</b> are, and how <b>wallets &amp; keys</b> work</li>
+   <li>What <b>stablecoins</b> are for</li>
+   <li>How an exchange <b>sets the price</b></li>
+   <li>The main <b>risks</b>, and which future claims are only opinions</li>
+  </ol></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#index" target="_blank" rel="noopener"><b>index</b></a></span><span>Outline from S1–S8</span></div>
+</section>
+
+<section class="slide" data-wiki="why-crypto">
+ <div class="body"><p class="eyebrow">1 · Why crypto?</p><h2>Paying online today needs a middleman</h2>
+  <div class="cols">
+   <ul>
+    <li>Online payments go through a trusted intermediary, such as a bank or card network.</li>
+    <li>Payments can be reversed, so the middleman handles disputes. This raises costs and makes tiny payments impractical.</li>
+    <li>Digital files can be copied. So how do you stop someone from spending the same coin twice? This is the <b>double-spending</b> problem.</li>
+   </ul>
+   <div class="box"><p class="eyebrow">Analogy (AI-written)</p><p>Picture a shared class notebook that everyone has a copy of. If it says "Amy gave Ben 5 coins", everyone sees it, so Amy can't give those same 5 coins to Cara too.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#why-crypto" target="_blank" rel="noopener"><b>why-crypto</b></a></span><span>Claims from S1, S5</span></div>
+</section>
+
+<section class="slide" data-wiki="why-crypto">
+ <div class="body"><p class="eyebrow">1 · Why crypto?</p><h2>The big idea: proof instead of trust</h2>
+  <p class="quote">"What is needed is an electronic payment system based on cryptographic proof instead of trust"</p>
+  <p class="small">From the Bitcoin whitepaper, Satoshi Nakamoto (2008), section 1</p>
+  <ul>
+   <li>The fix: announce every transaction publicly, and have the network agree on <b>one order</b>. The earliest transaction counts.</li>
+   <li>Bitcoin launched in <b>2009</b> with this goal of peer-to-peer, censorship-resistant money.</li>
+  </ul></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#why-crypto" target="_blank" rel="noopener"><b>why-crypto</b></a></span><span>Claims from S1, S5, S7</span></div>
+</section>
+
+<section class="slide" data-wiki="blockchain-basics">
+ <div class="body"><p class="eyebrow">2 · Blockchain</p><h2>Blocks linked by fingerprints</h2>
+  <div class="chain" aria-label="Three blocks, each storing the previous block's hash">
+   <div class="blk"><div class="t">Block 1</div>tx: A→B 5<br>prev: <span class="mono">0000…</span><br>hash: <span class="mono">8f3a…</span></div><span class="arrow">→</span>
+   <div class="blk"><div class="t">Block 2</div>tx: B→C 2<br>prev: <span class="mono">8f3a…</span><br>hash: <span class="mono">c71e…</span></div><span class="arrow">→</span>
+   <div class="blk"><div class="t">Block 3</div>tx: C→D 1<br>prev: <span class="mono">c71e…</span><br>hash: <span class="mono">19b4…</span></div>
+  </div>
+  <ul>
+   <li>A <b>block</b> is a group of recent transactions. A transaction only counts once it is in a block.</li>
+   <li>A <b>hash</b> is a fingerprint of the data. Each block stores the previous block's hash, and that is what makes the chain.</li>
+   <li>A blockchain is "a public database that is updated and shared across many computers in a network."</li>
+  </ul>
+  <p class="small">The hash values are made-up examples for illustration.</p></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#blockchain-basics" target="_blank" rel="noopener"><b>blockchain-basics</b></a></span><span>Claims from S1, S2</span></div>
+</section>
+
+<section class="slide" data-wiki="blockchain-basics">
+ <div class="body"><p class="eyebrow">2 · Blockchain</p><h2>Why you can't quietly edit history</h2>
+  <div class="chain">
+   <div class="blk"><div class="t">Block 1</div>hash: <span class="mono">8f3a…</span></div><span class="arrow">→</span>
+   <div class="blk bad"><div class="t">Block 2 (edited!)</div>new hash: <span class="mono">5d02…</span></div><span class="arrow">✕</span>
+   <div class="blk bad"><div class="t">Block 3</div>prev says <span class="mono">c71e…</span><br>no longer matches</div>
+  </div>
+  <ul>
+   <li>"The data in a block cannot change without changing all subsequent blocks."</li>
+   <li>Thousands of copies of the ledger sit on computers around the world, which makes it extremely hard to alter.</li>
+   <li>Bitcoin adds a new block roughly every <b>10 minutes</b>.</li>
+  </ul></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#blockchain-basics" target="_blank" rel="noopener"><b>blockchain-basics</b></a></span><span>Claims from S2, S5</span></div>
+</section>
+
+<section class="slide" data-wiki="p2p-network">
+ <div class="body"><p class="eyebrow">3 · Peer-to-peer</p><h2>No central server: many nodes check each other</h2>
+  <div class="cols">
+   <div><p>The <b>nodes</b> are computers that each keep a copy of the ledger. How a Bitcoin payment spreads:</p>
+   <ol class="small" style="font-size:14px">
+    <li>The transaction is broadcast to all nodes</li><li>Nodes collect transactions into a block</li><li>Nodes work on the proof-of-work</li>
+    <li>The winner broadcasts the block</li><li>Others accept it only if every transaction is valid and unspent</li><li>They build the next block on top of it</li>
+   </ol></div>
+   <div class="box"><p>Nodes always trust the <b>longest chain</b>. If two blocks appear at the same moment, the tie breaks when the next block arrives.</p>
+   <p class="small">Traditional payments: a bank validates. Crypto: "a distributed network of nodes validates transactions".</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#p2p-network" target="_blank" rel="noopener"><b>p2p-network</b></a></span><span>Claims from S1, S2, S5</span></div>
+</section>
+
+<section class="slide" data-wiki="consensus">
+ <div class="body"><p class="eyebrow">4 · Consensus</p><h2>How strangers agree on the next block</h2>
+  <div class="tw"><table>
+   <tr><th></th><th>Proof of Work (Bitcoin)</th><th>Proof of Stake (Ethereum)</th></tr>
+   <tr><td>Who adds blocks</td><td>Miners who find a nonce that makes the block's hash start with enough zeros</td><td>Validators chosen at random, who lock up (stake) ETH</td></tr>
+   <tr><td>Hard part</td><td>Hard to find, easy to check (one hash)</td><td>Other validators check the proposed block</td></tr>
+   <tr><td>Why stay honest</td><td>New coins + fees as reward; rewriting history means redoing all the work</td><td>Rewards for honesty; staked collateral can be destroyed for misbehavior</td></tr>
+   <tr><td>Voting power</td><td>"one-CPU-one-vote"</td><td>Weighted by staked ETH</td></tr>
+  </table></div>
+  <p class="small">Analogy (AI-written): PoW is a lottery where you buy tickets with electricity. PoS is one where you put down a deposit, and you lose it if you cheat.</p></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#consensus" target="_blank" rel="noopener"><b>consensus</b></a></span><span>Claims from S1, S2</span></div>
+</section>
+
+<section class="slide" data-wiki="bitcoin">
+ <div class="body"><p class="eyebrow">5 · Bitcoin</p><h2>The first cryptocurrency</h2>
+  <div class="cols">
+   <ul>
+    <li>Launched in 2009. It is the largest cryptocurrency by market capitalization.</li>
+    <li>It has a <b>hard cap of 21 million coins</b>. New coins come from mining rewards.</li>
+    <li>"We define an electronic coin as a chain of digital signatures." Each owner signs the coin over to the next owner's <b>public key</b>.</li>
+    <li>The public can see amounts moving between keys, but not who owns those keys.</li>
+   </ul>
+   <div class="box"><p class="eyebrow">Fun fact</p><p>A famous early purchase was two pizzas for <span class="mono">10,000 BTC</span> in 2010.</p>
+   <p class="small">If you lose your coins or they're stolen, there's limited recourse, because no central authority manages Bitcoin.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#bitcoin" target="_blank" rel="noopener"><b>bitcoin</b></a></span><span>Claims from S1, S3, S5, S7</span></div>
+</section>
+
+<section class="slide" data-wiki="wallets-and-keys">
+ <div class="body"><p class="eyebrow">5b · Wallets &amp; keys</p><h2>Your keys are your coins</h2>
+  <div class="cols">
+   <div><p><span class="tag">PUBLIC KEY</span><b>Safe to share</b></p><ul>
+    <li>Other people use it to send you crypto. "Think of your public key as your mailing address."</li>
+    <li>Sharing it doesn't let anyone take your money.</li>
+   </ul>
+   <p style="margin-top:14px"><span class="tag op">PRIVATE KEY</span><b>Never share</b></p><ul>
+    <li>It "functions as a password to your crypto wallet". It <b>signs</b> your transactions, and the network won't accept a spend without that signature.</li>
+    <li>Anyone who gets it can take everything in the wallet.</li>
+   </ul></div>
+   <div class="box"><p class="eyebrow">Seed phrase &amp; custody</p>
+    <p>Many wallets hide the private key behind a <b>seed phrase</b>, a string of random words.</p>
+    <p>On an exchange wallet (Coinbase, Binance), <b>the exchange holds your key</b> and controls the funds for you.</p>
+    <p class="small">Lost or stolen keys can't be recovered. Write the phrase down, keep copies in more than one place, and never screenshot or photograph it.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#wallets-and-keys" target="_blank" rel="noopener"><b>wallets-and-keys</b></a></span><span>Claims from S1, S8</span></div>
+</section>
+
+<section class="slide" data-wiki="ethereum">
+ <div class="body"><p class="eyebrow">6 · Ethereum</p><h2>A blockchain with a computer inside</h2>
+  <div class="cols">
+   <ul>
+    <li>Every node keeps the state of one shared computer, called the <b>Ethereum Virtual Machine (EVM)</b>.</li>
+    <li><b>ETH</b> is Ethereum's own coin. You pay fees in ETH to run things, and bigger jobs cost more, which stops spam.</li>
+    <li><b>Smart contracts</b> are programs on the EVM that anyone can call. Apps built from them are called <b>dapps</b>: marketplaces, lending, games.</li>
+   </ul>
+   <div class="box"><p class="quote" style="font-size:20px">"you can think of a smart contract like a sort of vending machine"</p>
+   <p class="small">You put money in and press a button, and the rules run on their own. No cashier is needed.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#ethereum" target="_blank" rel="noopener"><b>ethereum</b></a></span><span>Claims from S2, S5</span></div>
+</section>
+
+<section class="slide" data-wiki="stablecoins">
+ <div class="body"><p class="eyebrow">7 · Stablecoins</p><h2>Crypto that tries to stay at $1</h2>
+  <p>Normal crypto prices swing a lot, which makes them awkward for everyday payments. Stablecoins are "cryptocurrencies without the volatility."</p>
+  <div class="tw"><table>
+   <tr><th>Type</th><th>How it holds its value</th><th>Catch</th></tr>
+   <tr><td>Fiat-backed (USDT, USDC)</td><td>1:1 dollars held by an issuer</td><td>Centralized; reserves need audits</td></tr>
+   <tr><td>Crypto-backed (DAI/USDS)</td><td>Over-collateralised, e.g. ≥ $2 of crypto per $1</td><td>Can lose its peg if the collateral crashes</td></tr>
+   <tr><td>Commodity-backed (Pax Gold)</td><td>Backed by gold</td><td>You must trust the issuer</td></tr>
+   <tr><td>Algorithmic</td><td>Code grows or shrinks the supply</td><td>You must trust the algorithm</td></tr>
+  </table></div>
+  <p class="small">Even Tether can drift from $1 under market stress. The stablecoin market was about $235B as of March 2025.</p></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#stablecoins" target="_blank" rel="noopener"><b>stablecoins</b></a></span><span>Claims from S3, S5, S7</span></div>
+</section>
+
+<section class="slide" data-wiki="exchanges-and-price">
+ <div class="body"><p class="eyebrow">8 · Exchanges &amp; price</p><h2>No one "sets" the price: orders meet</h2>
+  <div class="cols">
+   <div><ul>
+    <li>An <b>order book</b> is "a list of pending buy and sell orders for a cryptocurrency on an exchange."</li>
+    <li><b>Bids</b> are what buyers will pay. <b>Asks</b> are what sellers want. The gap between them is the <b>spread</b>, and a smaller spread usually means more liquidity.</li>
+    <li>A <b>market order</b> fills right away at the best price. A <b>limit order</b> waits for your price.</li>
+    <li>The exchange keeps matching orders. That continuous matching is <b>price discovery</b>.</li>
+   </ul></div>
+   <div class="box"><p class="eyebrow">Example order book (illustration)</p>
+    <div class="book"><div><div class="ask">ASK 101.20 × 3</div><div class="ask">ASK 100.80 × 5</div><div class="ask">ASK 100.50 × 2</div></div>
+    <div><div class="bid">BID 100.30 × 4</div><div class="bid">BID 100.10 × 6</div><div class="bid">BID 99.90 × 1</div></div></div>
+    <p class="small">Spread = 100.50 − 100.30 = 0.20. A market buy would take the 100.50 ask. Decentralized exchanges like Uniswap usually use liquidity pools (automated market makers) instead of an order book.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#exchanges-and-price" target="_blank" rel="noopener"><b>exchanges-and-price</b></a></span><span>Claims from S4, S5</span></div>
+</section>
+
+<section class="slide" data-wiki="risks-and-future">
+ <div class="body"><p class="eyebrow">9 · Risks &amp; future</p><h2>Facts vs. opinions</h2>
+  <div class="cols">
+   <div><p><span class="tag">FACT</span><b>Known risks</b></p><ul>
+    <li>Very volatile, more than the S&amp;P 500. One asset fell more than 50% in a single day.</li>
+    <li>Not legal tender, and no deposit insurance. Exchanges and wallets have been hacked.</li>
+    <li>Little recourse if coins are lost or stolen. Fraud and scandals have happened, such as the ByBit hack.</li>
+    <li>Investors want regulation, but they also fear it could limit crypto's peer-to-peer nature.</li>
+   </ul></div>
+   <div><p><span class="tag op">OPINION</span><b>Predictions (a crypto company's blog)</b></p><ul>
+    <li>Real-world assets like real estate and stocks will be tokenized.</li>
+    <li>The "Wild West" era is ending as governments regulate.</li>
+    <li>"Stablecoins are crypto's first product-market-fit."</li>
+   </ul>
+   <p class="small" style="margin-top:12px">Morgan Stanley's advice: "proceed with caution" and get educated first.</p></div>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#risks-and-future" target="_blank" rel="noopener"><b>risks-and-future</b></a></span><span>Facts S5, S6, S7 · opinions S7</span></div>
+</section>
+
+<section class="slide" data-wiki="index">
+ <div class="body"><p class="eyebrow">Check yourself</p><h2>Three quick questions</h2>
+  <div class="quiz">
+   <details><summary>1. Why can't someone secretly change an old Bitcoin transaction?</summary><p>Its block's hash would change, which breaks every later block. The attacker would also have to redo the proof-of-work for all of them, faster than the honest network.</p></details>
+   <details><summary>2. What is the difference between a fiat-backed and an algorithmic stablecoin?</summary><p>A fiat-backed coin is backed by dollars an issuer holds, so you trust the issuer. An algorithmic coin uses code to change the supply, so you trust the algorithm.</p></details>
+   <details><summary>3. Who decides the price of ETH on an exchange?</summary><p>Nobody alone. The price comes from bids and asks being matched in the order book, which is called price discovery.</p></details>
+  </div></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#blockchain-basics" target="_blank" rel="noopener"><b>blockchain-basics</b></a> · <a href="../wiki/#consensus" target="_blank" rel="noopener"><b>consensus</b></a> · <a href="../wiki/#stablecoins" target="_blank" rel="noopener"><b>stablecoins</b></a> · <a href="../wiki/#exchanges-and-price" target="_blank" rel="noopener"><b>exchanges-and-price</b></a></span><span>Recap of S1, S2, S3, S4</span></div>
+</section>
+
+<section class="slide" data-wiki="index">
+ <div class="body"><p class="eyebrow">Sources</p><h2>Where the wiki's knowledge comes from</h2>
+  <div class="tw"><table style="font-size:13px">
+   <tr><th>id</th><th>Source</th></tr>
+   <tr><td>S1</td><td>Nakamoto, <i>Bitcoin: A Peer-to-Peer Electronic Cash System</i> (2008)</td></tr>
+   <tr><td>S2</td><td>ethereum.org, <i>Technical intro to Ethereum</i></td></tr>
+   <tr><td>S3</td><td>ethereum.org, <i>Stablecoins explained</i></td></tr>
+   <tr><td>S4</td><td>Crypto.com University, <i>What Is an Order Book and How Does It Work?</i> (2024)</td></tr>
+   <tr><td>S5</td><td>Morgan Stanley, <i>What Is Cryptocurrency? A Guide</i></td></tr>
+   <tr><td>S6</td><td>GWI, <i>The future of cryptocurrency</i> (about 2021)</td></tr>
+   <tr><td>S7</td><td>Avalanche blog, <i>The Future of Blockchain and Cryptocurrency: The Next 10 Years</i> (2025)</td></tr>
+   <tr><td>S8</td><td>CoinDesk, <i>A Crypto Must-Know: Public vs. Private Keys</i> (2022, updated 2024)</td></tr>
+  </table></div>
+  <p class="small">This is not investment advice. The analogies and example numbers on the slides were written by the AI, and the slides label them that way.</p></div>
+ <div class="foot"><span>Wiki: <a href="../wiki/#index" target="_blank" rel="noopener"><b>index</b></a></span><span>S1–S8</span></div>
+</section>
+
+</div>
+<nav><button id="prev" type="button" aria-label="Previous slide">← Prev</button><span id="count" aria-live="polite">1 / 16</span><button id="next" type="button" aria-label="Next slide">Next →</button><span class="hint">← → keys · swipe on phone</span></nav>
+<div class="toc" id="toc" hidden role="dialog" aria-label="Contents"><div class="panel"><h3>Contents <button class="iconbtn" id="tocclose" type="button">Close</button></h3><ol id="toclist"></ol></div></div>
+<script>
+(function(){
+ var s=[].slice.call(document.querySelectorAll('.slide')),i=0;
+ var c=document.getElementById('count'),prog=document.getElementById('prog'),sec=document.getElementById('sec'),
+     prev=document.getElementById('prev'),next=document.getElementById('next'),toc=document.getElementById('toc'),list=document.getElementById('toclist');
+ function label(e){var h=e.querySelector('h1,h2'),ey=e.querySelector('.eyebrow');return {t:h?h.textContent:'',s:ey?ey.textContent:''}}
+ s.forEach(function(e,k){var L=label(e),li=document.createElement('li'),b=document.createElement('button');b.type='button';
+  b.innerHTML='<span class="n">'+(k+1)+'</span><span><span class="s"></span><span class="tt"></span></span>';
+  b.querySelector('.s').textContent=L.s;b.querySelector('.tt').textContent=L.t;
+  b.onclick=function(){closeToc();show(k)};li.appendChild(b);list.appendChild(li)});
+ var tb=[].slice.call(list.querySelectorAll('button'));
+ function show(n){i=Math.max(0,Math.min(s.length-1,n));
+  s.forEach(function(e,k){e.classList.toggle('on',k===i)});s[i].scrollTop=0;
+  c.textContent=(i+1)+' / '+s.length;prog.style.width=((i+1)/s.length*100)+'%';
+  sec.textContent=label(s[i]).s;prev.disabled=i===0;next.disabled=i===s.length-1;
+  tb.forEach(function(b,k){b.classList.toggle('cur',k===i)});
+  if(location.hash!=='#s'+(i+1)){try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}}
+ function openToc(){toc.hidden=false;tb[i].focus()} function closeToc(){toc.hidden=true;document.getElementById('tocbtn').focus()}
+ document.getElementById('tocbtn').onclick=openToc;document.getElementById('tocclose').onclick=closeToc;
+ toc.addEventListener('click',function(e){if(e.target===toc)closeToc()});
+ document.getElementById('fsbtn').onclick=function(){try{if(document.fullscreenElement){document.exitFullscreen()}else{document.documentElement.requestFullscreen().catch(function(){})}}catch(e){}};
+ prev.onclick=function(){show(i-1)};next.onclick=function(){show(i+1)};
+ document.addEventListener('keydown',function(e){
+  if(!toc.hidden){if(e.key==='Escape')closeToc();return}
+  if(e.target.closest&&e.target.closest('summary'))return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1)}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){show(i-1)}
+  else if(e.key==='Home'){show(0)}else if(e.key==='End'){show(s.length-1)}
+  else if(e.key==='c'||e.key==='C'){openToc()}else if(e.key==='f'||e.key==='F'){document.getElementById('fsbtn').click()}});
+ var x0=null,y0=null;
+ document.getElementById('stage').addEventListener('touchstart',function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+ document.getElementById('stage').addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)show(i+(dx<0?1:-1));x0=null},{passive:true});
+ var m=/^#s(\d+)$/.exec(location.hash);show(m?parseInt(m[1],10)-1:0);
+ window.addEventListener('hashchange',function(){var m=/^#s(\d+)$/.exec(location.hash);if(m)show(parseInt(m[1],10)-1)});
+})();
+</script>
+</body></html>
