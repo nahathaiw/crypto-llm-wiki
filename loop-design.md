@@ -6,7 +6,7 @@ title: "Loop design"
 
 ```mermaid
 flowchart TD
-  A[Discuss with Pure: topic, audience, pages, sources] --> B[Fetch source]
+  A[Discuss with Nahathai: topic, audience, pages, sources] --> B[Fetch source]
   B --> C{Ingest check: loaded? date? fact or opinion? suspicious numbers}
   C -- blocked / failed --> B2[Drop or replace source] --> B
   C -- ok, with ⚠ flags --> D[Write raw/S#.md note]
