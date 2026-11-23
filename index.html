@@ -54,7 +54,7 @@ flowchart TD
   K -- layout bug --> I
   K -- pass --> L[Publish]
 </pre>
-<p>Full explanation (which steps repeat, where the checks are, and why): <a href="https://github.com/nahathaiw/crypto-llm-wiki/blob/main/loop-design.md">loop-design.md</a></p></section>
+<p>Full explanation (which steps repeat, where the checks are, and why): <a href="loop-design.html">loop-design.md</a></p></section>
 
 <section><h2>Real runs and check records</h2>
 <div class="tw"><table>
@@ -62,7 +62,7 @@ flowchart TD
 <tr><td>Run 1 (7 sources)</td><td>Fetch was blocked twice. The ingest check flagged a wrong "$5 billion" figure. The grounding check found 3 claims that said more than their sources. The slide check found 2 slides missing source tags plus a checker bug, and 1 slide fact that was missing from the wiki (we looped back to the wiki). The render check found a phone layout bug.</td></tr>
 <tr><td>Run 2 (+1 source on wallets &amp; keys)</td><td>The grounding check was moved earlier, into ingest, and it stopped a wrong claim ("public key encrypts transactions") before generation. Only 1 grounding fix was needed after generation.</td></tr>
 </table></div>
-<p>Details: <a href="https://github.com/nahathaiw/crypto-llm-wiki/blob/main/checks/run-record.md">checks/run-record.md</a></p></section>
+<p>Details: <a href="checks/run-record.html">checks/run-record.md</a></p></section>
 
 <footer>AI use: the wiki pages, slides, scripts and this site were generated with Claude (Anthropic), based on my topic, audience, subtopic and source choices. The full process is documented in the repo. Not investment advice.</footer>
 </main>

@@ -1,3 +1,7 @@
+---
+layout: default
+title: "Loop design"
+---
 # Loop / graph design: Crypto Basics LLM Wiki → teaching slides
 
 ```mermaid
@@ -32,6 +36,7 @@ Fetch data → write raw note → generate wiki pages → lint + grounding check
 - The **Slide check → wiki** edge is the important one. If a slide needs a fact the wiki doesn't contain, we don't just add it to the slide. We go back, add the fact to the wiki with its source tag (or drop it), and then regenerate. This keeps the wiki as the single source of truth.
 
 ## Where checks and regeneration happen
+
 | Check | Type | Catches | On fail |
 |---|---|---|---|
 | Ingest check | LLM + human | blocked pages, missing dates, opinion vs fact, suspicious numbers (⚠) | refetch / replace source, flag number |

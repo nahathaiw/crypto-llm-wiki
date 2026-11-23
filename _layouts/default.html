@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#EEF1F5;--card:#FFFFFF;--ink:#152233;--muted:#5A6878;--line:#D5DCE5;--accent:#2747A3;--hash:#A86A00;--soft:#E6ECF8;--warn:#9A3B1E;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root{--bg:#0F1620;--card:#17212E;--ink:#E6ECF3;--muted:#9AA8B8;--line:#2A3746;--accent:#8FA8F5;--hash:#E3B04B;--soft:#1F2C40;--warn:#F0A07F;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);padding:24px 16px 40px}
+.wrap{max-width:960px;margin:0 auto}
+nav{display:flex;flex-wrap:wrap;gap:6px 16px;font:600 13px var(--mono);margin:0 0 18px}
+nav a{text-decoration:none} nav a:hover{text-decoration:underline}
+nav a[aria-current]{color:var(--ink)}
+article{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 28px;min-width:0;overflow-wrap:break-word}
+h1{font:700 clamp(26px,4.5vw,40px)/1.15 var(--display);margin:0 0 16px}
+h2{font:600 22px var(--display);margin:28px 0 10px} h3{font:600 18px var(--display);margin:22px 0 8px}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.9em;color:var(--hash)}
+pre{background:var(--soft);border-radius:8px;padding:12px 14px;overflow-x:auto} pre code{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+blockquote{margin:0;padding:4px 16px;border-left:3px solid var(--accent);color:var(--muted)}
+.mermaid{overflow-x:auto;background:var(--card);text-align:center}
+.meta{font:13px/1.6 var(--mono);color:var(--muted);background:var(--soft);border-radius:8px;padding:10px 12px;margin:0 0 16px}
+footer{color:var(--muted);font-size:13px;margin-top:18px}
+@media (max-width:600px){article{padding:18px 16px}}
+</style></head><body><div class="wrap">
+{% assign u = page.url %}
+<nav aria-label="Site">
+ <a href="{{ site.baseurl }}/">Home</a>
+ <a href="{{ site.baseurl }}/slides/">Slides</a>
+ <a href="{{ site.baseurl }}/wiki/">Wiki</a>
+ <a href="{{ site.baseurl }}/loop-design.html"{% if u == '/loop-design.html' %} aria-current="page"{% endif %}>Loop design</a>
+ <a href="{{ site.baseurl }}/checks/run-record.html"{% if u == '/checks/run-record.html' %} aria-current="page"{% endif %}>Run record</a>
+ <a href="{{ site.baseurl }}/AGENTS.html"{% if u == '/AGENTS.html' %} aria-current="page"{% endif %}>AGENTS.md</a>
+</nav>
+<article>
+{% if page.path contains 'raw/' %}<p class="meta"><b>Raw source note {{ page.id }}</b>{% if page.author %} · {{ page.author }}{% endif %}{% if page.publisher %} · {{ page.publisher }}{% endif %}<br>Date: {{ page.date }} · Fetched: {{ page.fetched }} · Type: {{ page.type }} · Added by: {{ page.added_by }}<br><a href="https://github.com/nahathaiw/crypto-llm-wiki/blob/main/{{ page.path }}">Full note with source URL on GitHub →</a></p>
+<h1>{{ page.title }}</h1>{% endif %}
+{{ content }}
+</article>
+<footer>Rendered from <code>{{ page.path }}</code> in the repo. Generative AI homework, not investment advice.</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+// kramdown turns ```mermaid into a highlighted code block; swap it for a <pre class="mermaid">.
+document.querySelectorAll('code.language-mermaid, .language-mermaid code').forEach(function (c) {
+  var box = c.closest('div.language-mermaid') || c.closest('pre') || c;
+  if (!box.isConnected) return;
+  var pre = document.createElement('pre');
+  pre.className = 'mermaid';
+  pre.textContent = c.textContent;
+  box.replaceWith(pre);
+});
+mermaid.initialize({startOnLoad:true,theme:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});
+</script>
+</body></html>

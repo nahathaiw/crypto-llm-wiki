@@ -1,3 +1,7 @@
+---
+layout: default
+title: "Run record"
+---
 # Real run record — 2026-11-23 (Taipei)
 
 This is one complete run of the graph. The AI doing each step was Claude. Every result below was observed, and the raw outputs are in this folder.

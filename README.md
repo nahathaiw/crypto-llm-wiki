@@ -1,3 +1,7 @@
+---
+layout: default
+title: "README"
+---
 # Crypto Basics LLM Wiki → Teaching HTML Slides
 
 Generative AI course homework: build an LLM Wiki on my own topic, then use it as the only knowledge source for a teaching HTML slide deck.

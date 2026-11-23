@@ -3,3 +3,5 @@ logs.md
 submission.md
 .DS_Store
 __pycache__/
+_site/
+.jekyll-cache/

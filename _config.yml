@@ -1,0 +1,29 @@
+title: Crypto Basics LLM Wiki
+baseurl: "/crypto-llm-wiki"
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Only files WITH front matter are rendered (loop-design.md, checks/run-record.md,
+# AGENTS.md, README.md). Everything else, including slides/index.html,
+# wiki/index.html and wiki/*.md, is copied byte-for-byte (raw/ is handled below).
+# GitHub Pages turns on jekyll-optional-front-matter by default, which would
+# render every .md and make wiki/index.md overwrite wiki/index.html, so turn it off:
+require_front_matter: true
+readme_index:
+  enabled: false
+
+# raw/S*.md already carry YAML front matter (source metadata), so Jekyll cannot
+# copy them as-is; render them with the site layout instead of as bare HTML.
+defaults:
+  - scope:
+      path: "raw"
+    values:
+      layout: default
+
+exclude:
+  - logs.md
+  - submission.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

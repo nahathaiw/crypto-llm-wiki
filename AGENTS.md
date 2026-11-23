@@ -1,3 +1,7 @@
+---
+layout: default
+title: "AGENTS.md"
+---
 # AGENTS.md — Rules for the Crypto Basics LLM Wiki
 
 This wiki is written and maintained by an LLM, using the process "先討論、後生成" (discuss first, then generate).
